@@ -1,0 +1,78 @@
+{
+  "changes": [
+    {
+      "description": "Deterministic Markdown release notes and JSON summary generation from local git metadata",
+      "type": "Added"
+    },
+    {
+      "description": "Strict changelog/checks JSON validation, unit tests, selfcheck wrapper, README, changelog, license, and pyproject",
+      "type": "Added"
+    },
+    {
+      "description": "Zero-dependency Python CLI with generate, checkpoint, and selfcheck commands",
+      "type": "Added"
+    }
+  ],
+  "checks": [
+    {
+      "command": "git diff --check",
+      "detail": null,
+      "status": "passed"
+    },
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "detail": "9 tests",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/selfcheck.py",
+      "detail": null,
+      "status": "passed"
+    },
+    {
+      "command": "secret-pattern diff scan",
+      "detail": "no secret-like patterns",
+      "status": "passed"
+    }
+  ],
+  "commits": [
+    {
+      "author": "SergioYin",
+      "date": "2026-05-11",
+      "hash": "31c7d7e23bb03f898586e7e7b88aad5e962424bb",
+      "short_hash": "31c7d7e",
+      "subject": "chore: seed release notes kit repo"
+    }
+  ],
+  "date": "2026-05-11",
+  "repo": {
+    "branch": "main",
+    "dirty": true,
+    "head": "31c7d7e23bb03f898586e7e7b88aad5e962424bb",
+    "latest_tag": null,
+    "root": "/home/xjyin/workspace/token-lab/20260511-agent-release-notes-kit",
+    "short_head": "31c7d7e23bb0",
+    "status": [
+      " A CHANGELOG.md",
+      " A LICENSE",
+      " A pyproject.toml",
+      " A release_notes_kit/__init__.py",
+      " A release_notes_kit/__main__.py",
+      " A release_notes_kit/cli.py",
+      " A release_notes_kit/core.py",
+      " A release_notes_kit/errors.py",
+      " A release_notes_kit/git.py",
+      " A release_notes_kit/inputs.py",
+      " A release_notes_kit/render.py",
+      " A release_notes_kit/selfcheck.py",
+      " A scripts/selfcheck.py",
+      " A tests/test_cli.py",
+      " A tests/test_inputs.py",
+      " A tests/test_render.py",
+      " M README.md",
+      "?? release_notes_kit/__pycache__/"
+    ]
+  },
+  "tag": "v0.1.0",
+  "version": "0.1.0"
+}

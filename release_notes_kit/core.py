@@ -1,0 +1,48 @@
+"""Public operations used by the CLI and selfcheck."""
+
+from __future__ import annotations
+
+from pathlib import Path
+from typing import Optional
+
+from .git import read_git_info
+from .inputs import load_changelog, load_checks
+from .render import render_checkpoint_markdown, render_release_markdown, render_summary_json
+
+
+def generate(
+    output: str,
+    summary: str,
+    date: str,
+    changelog_path: Optional[str] = None,
+    checks_path: Optional[str] = None,
+    tag: Optional[str] = None,
+    cwd: Optional[str] = None,
+    max_commits: int = 50,
+) -> None:
+    git_info = read_git_info(cwd=cwd, max_commits=max_commits)
+    changelog = load_changelog(changelog_path)
+    checks = load_checks(checks_path)
+    Path(output).write_text(
+        render_release_markdown(git_info, changelog, checks, date=date, tag=tag),
+        encoding="utf-8",
+    )
+    Path(summary).write_text(
+        render_summary_json(git_info, changelog, checks, date=date, tag=tag),
+        encoding="utf-8",
+    )
+
+
+def checkpoint(
+    output: str,
+    date: str,
+    checks_path: Optional[str] = None,
+    tag_candidate: Optional[str] = None,
+    cwd: Optional[str] = None,
+) -> None:
+    git_info = read_git_info(cwd=cwd, max_commits=1)
+    checks = load_checks(checks_path)
+    Path(output).write_text(
+        render_checkpoint_markdown(git_info, checks, date=date, tag_candidate=tag_candidate),
+        encoding="utf-8",
+    )

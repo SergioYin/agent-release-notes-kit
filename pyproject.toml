@@ -1,0 +1,12 @@
+[project]
+name = "agent-release-notes-kit"
+version = "0.1.0"
+description = "Deterministic release notes and checkpoint generator for small AI-agent asset repos."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [{name = "Token Lab"}]
+dependencies = []
+
+[project.scripts]
+release-notes-kit = "release_notes_kit.cli:main"
