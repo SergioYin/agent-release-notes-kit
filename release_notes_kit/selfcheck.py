@@ -7,7 +7,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from .core import checkpoint, collect, compare, generate
+from .core import checkpoint, collect, compare, generate, github_body
 from .errors import KitError
 
 
@@ -85,6 +85,7 @@ def run_selfcheck() -> None:
                 "release-summary.json\n"
                 "RELEASE_COMPARISON.md\n"
                 "release-comparison.json\n"
+                "GITHUB_RELEASE_BODY.md\n"
                 "CHECKPOINT.md\n"
                 "release-inputs.json\n"
                 "RELEASE_NOTES_COLLECTED.md\n"
@@ -133,6 +134,10 @@ def run_selfcheck() -> None:
             output=str(repo / "RELEASE_COMPARISON.md"),
             summary=str(repo / "release-comparison.json"),
         )
+        github_body(
+            summary=str(repo / "release-summary.json"),
+            output=str(repo / "GITHUB_RELEASE_BODY.md"),
+        )
         first = _snapshot(repo)
         generate(
             output=str(repo / "RELEASE_NOTES.md"),
@@ -172,6 +177,10 @@ def run_selfcheck() -> None:
             output=str(repo / "RELEASE_COMPARISON.md"),
             summary=str(repo / "release-comparison.json"),
         )
+        github_body(
+            summary=str(repo / "release-summary.json"),
+            output=str(repo / "GITHUB_RELEASE_BODY.md"),
+        )
         second = _snapshot(repo)
         if first != second:
             raise KitError("Selfcheck failed: repeated generation was not deterministic.")
@@ -188,6 +197,7 @@ def _snapshot(repo: Path) -> str:
             (repo / "release-summary-collected.json").read_text(encoding="utf-8"),
             (repo / "RELEASE_COMPARISON.md").read_text(encoding="utf-8"),
             (repo / "release-comparison.json").read_text(encoding="utf-8"),
+            (repo / "GITHUB_RELEASE_BODY.md").read_text(encoding="utf-8"),
         ]
     )
 

@@ -6,7 +6,7 @@ import argparse
 import sys
 
 from . import __version__
-from .core import checkpoint, collect, compare, generate
+from .core import checkpoint, collect, compare, generate, github_body
 from .errors import KitError
 from .selfcheck import run_selfcheck
 
@@ -61,6 +61,11 @@ def build_parser() -> argparse.ArgumentParser:
     compare_parser.add_argument("--output", default="RELEASE_COMPARISON.md", help="Markdown comparison output path")
     compare_parser.add_argument("--summary", default="release-comparison.json", help="JSON comparison output path")
     compare_parser.set_defaults(func=_compare)
+
+    github_body_parser = subparsers.add_parser("github-body", help="write a concise GitHub release body from release-summary JSON")
+    github_body_parser.add_argument("--summary", default="release-summary.json", help="release-summary JSON input path")
+    github_body_parser.add_argument("--output", default="GITHUB_RELEASE_BODY.md", help="Markdown output path")
+    github_body_parser.set_defaults(func=_github_body)
 
     selfcheck_parser = subparsers.add_parser("selfcheck", help="run the built-in deterministic fixture check")
     selfcheck_parser.set_defaults(func=_selfcheck)
@@ -117,6 +122,10 @@ def _compare(args) -> None:
         output=args.output,
         summary=args.summary,
     )
+
+
+def _github_body(args) -> None:
+    github_body(summary=args.summary, output=args.output)
 
 
 def _selfcheck(args) -> None:

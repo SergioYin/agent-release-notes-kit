@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.0 - 2026-05-11
+
+- Added zero-dependency `github-body` command for deterministic GitHub release body Markdown from `release-summary.json`.
+- Added optional `artifacts` and `upgrade_notes` rendering for concise release draft sections.
+- Added GitHub body examples, CLI/unit tests, and selfcheck coverage for repeated deterministic output.
+- Updated README release workflow documentation for GitHub release draft generation.
+
 ## 0.3.0 - 2026-05-11
 
 - Added `compare` command for deterministic Markdown and JSON summaries from two local `release-summary.json` files.

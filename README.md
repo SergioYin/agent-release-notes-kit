@@ -128,6 +128,37 @@ removed since the previous release, verification status changes, and new commits
 listed in the current summary. The `examples/cross-asset` fixtures model a mixed
 asset repo with prompt, dataset, model-card, tokenizer, and token-ledger entries.
 
+## Write a GitHub Release Body
+
+Use `github-body` after `generate` writes `release-summary.json` to create a
+concise Markdown body suitable for a GitHub release draft:
+
+```sh
+python -m release_notes_kit github-body \
+  --summary release-summary.json \
+  --output GITHUB_RELEASE_BODY.md
+```
+
+The body includes deterministic sections for highlights, verification,
+artifacts, and upgrade notes. Existing release-summary files work as-is; when no
+artifact list is supplied, the command lists `RELEASE_NOTES.md` and
+`release-summary.json`. To include explicit artifacts or upgrade notes, add
+optional top-level fields to the release summary:
+
+```json
+{
+  "artifacts": [
+    {"path": "GITHUB_RELEASE_BODY.md", "description": "GitHub release body"},
+    {"path": "release-summary.json", "description": "Release ledger", "sha256": "0123456789abcdef"}
+  ],
+  "upgrade_notes": [
+    "Run `github-body` after regenerating `release-summary.json` for release drafts."
+  ]
+}
+```
+
+See `examples/github-body` for a complete input and rendered output pair.
+
 ## Selfcheck
 
 ```sh
@@ -146,9 +177,10 @@ python -m release_notes_kit collect --date 2026-05-11 --output release-inputs.js
 python -m unittest discover -s tests -v
 python scripts/selfcheck.py
 git diff --check
-python -m release_notes_kit generate --date 2026-05-11 --tag v0.3.0 --inputs release-inputs.json
+python -m release_notes_kit generate --date 2026-05-11 --tag v0.4.0 --inputs release-inputs.json
 python -m release_notes_kit compare --previous previous-release-summary.json --current release-summary.json
-python -m release_notes_kit checkpoint --date 2026-05-11 --tag-candidate v0.3.0 --checks release-inputs.json
+python -m release_notes_kit github-body --summary release-summary.json --output GITHUB_RELEASE_BODY.md
+python -m release_notes_kit checkpoint --date 2026-05-11 --tag-candidate v0.4.0 --checks release-inputs.json
 ```
 
 After running checks, update the `checks.commands` entries in

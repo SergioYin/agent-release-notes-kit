@@ -8,6 +8,7 @@ from typing import Optional
 from .compare import compare_release_summaries, render_comparison_json, render_comparison_markdown
 from .collect import collect as collect
 from .git import read_git_info
+from .github_body import render_github_body_from_file
 from .inputs import load_changelog, load_checks
 from .render import render_checkpoint_markdown, render_release_markdown, render_summary_json
 
@@ -64,3 +65,7 @@ def compare(
     Path(output).write_text(render_comparison_markdown(comparison), encoding="utf-8")
     if summary:
         Path(summary).write_text(render_comparison_json(comparison), encoding="utf-8")
+
+
+def github_body(summary: str, output: str) -> None:
+    Path(output).write_text(render_github_body_from_file(summary), encoding="utf-8")

@@ -82,6 +82,41 @@ class CliTests(unittest.TestCase):
         self.assertIn("Current: `0.3.0`", rendered)
         self.assertEqual("0.2.0", payload["previous"]["version"])
 
+    def test_github_body_command_writes_markdown(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            summary = root / "release-summary.json"
+            output = root / "GITHUB_RELEASE_BODY.md"
+            payload = _summary("0.4.0", "c3", "passed")
+            payload["artifacts"] = [{"path": "release-summary.json", "description": "Release ledger"}]
+            payload["upgrade_notes"] = ["No manual migration required."]
+            summary.write_text(json.dumps(payload), encoding="utf-8")
+
+            completed = subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "release_notes_kit",
+                    "github-body",
+                    "--summary",
+                    str(summary),
+                    "--output",
+                    str(output),
+                ],
+                text=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                check=False,
+            )
+
+            rendered = output.read_text(encoding="utf-8")
+
+        self.assertEqual(0, completed.returncode, completed.stderr)
+        self.assertIn("## Highlights", rendered)
+        self.assertIn("## Verification", rendered)
+        self.assertIn("## Artifacts", rendered)
+        self.assertIn("## Upgrade Notes", rendered)
+
 
 def _summary(version, head, check_status):
     return {
