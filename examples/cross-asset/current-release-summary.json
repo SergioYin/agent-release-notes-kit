@@ -1,0 +1,65 @@
+{
+  "changes": [
+    {
+      "description": "Model card release fixture with tokenizer metadata",
+      "type": "Added"
+    },
+    {
+      "description": "Prompt templates for text asset release notes",
+      "type": "Added"
+    },
+    {
+      "description": "Token vocabulary fixture for checkpoint ledgers",
+      "type": "Added"
+    },
+    {
+      "description": "Dataset card checklist for ledger-ready metadata",
+      "type": "Changed"
+    }
+  ],
+  "checks": [
+    {
+      "command": "git diff --check",
+      "detail": null,
+      "status": "passed"
+    },
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "detail": "fixture",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/selfcheck.py",
+      "detail": null,
+      "status": "passed"
+    }
+  ],
+  "commits": [
+    {
+      "author": "Token Lab",
+      "date": "2026-05-10",
+      "hash": "1111111111111111111111111111111111111111",
+      "short_hash": "1111111",
+      "subject": "feat: add prompt and dataset release fixtures"
+    },
+    {
+      "author": "Token Lab",
+      "date": "2026-05-11",
+      "hash": "2222222222222222222222222222222222222222",
+      "short_hash": "2222222",
+      "subject": "feat: add model and token release fixtures"
+    }
+  ],
+  "date": "2026-05-11",
+  "repo": {
+    "branch": "main",
+    "dirty": false,
+    "head": "2222222222222222222222222222222222222222",
+    "latest_tag": "v0.2.0",
+    "root": "/examples/cross-asset",
+    "short_head": "222222222222",
+    "status": []
+  },
+  "tag": "v0.3.0",
+  "version": "0.3.0"
+}

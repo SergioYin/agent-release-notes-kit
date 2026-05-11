@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0 - 2026-05-11
+
+- Added `compare` command for deterministic Markdown and JSON summaries from two local `release-summary.json` files.
+- Added cross-asset example release-summary fixtures for prompt, dataset, model-card, tokenizer, and token-ledger style assets.
+- Added comparison tests and selfcheck coverage for repeated deterministic comparison output.
+- Updated release workflow documentation for previous-release comparisons.
+
 ## 0.2.0 - 2026-05-11
 
 - Added `collect` command for deterministic release input JSON from local git state.

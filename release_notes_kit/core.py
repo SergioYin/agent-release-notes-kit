@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
+from .compare import compare_release_summaries, render_comparison_json, render_comparison_markdown
 from .collect import collect as collect
 from .git import read_git_info
 from .inputs import load_changelog, load_checks
@@ -51,3 +52,15 @@ def checkpoint(
         render_checkpoint_markdown(git_info, checks, date=date, tag_candidate=tag_candidate),
         encoding="utf-8",
     )
+
+
+def compare(
+    previous: str,
+    current: str,
+    output: str,
+    summary: Optional[str] = None,
+) -> None:
+    comparison = compare_release_summaries(previous, current)
+    Path(output).write_text(render_comparison_markdown(comparison), encoding="utf-8")
+    if summary:
+        Path(summary).write_text(render_comparison_json(comparison), encoding="utf-8")

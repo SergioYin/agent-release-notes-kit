@@ -110,6 +110,24 @@ python -m release_notes_kit checkpoint \
 The checkpoint captures repository path, branch, head commit, tag candidate,
 working-tree status, and supplied verification results.
 
+## Compare Release Summaries
+
+Use `compare` when you have two local `release-summary.json` files and need a
+deterministic summary of what changed between releases:
+
+```sh
+python -m release_notes_kit compare \
+  --previous examples/cross-asset/previous-release-summary.json \
+  --current examples/cross-asset/current-release-summary.json \
+  --output RELEASE_COMPARISON.md \
+  --summary release-comparison.json
+```
+
+The comparison includes release identity, change-count deltas, changes added or
+removed since the previous release, verification status changes, and new commits
+listed in the current summary. The `examples/cross-asset` fixtures model a mixed
+asset repo with prompt, dataset, model-card, tokenizer, and token-ledger entries.
+
 ## Selfcheck
 
 ```sh
@@ -128,8 +146,9 @@ python -m release_notes_kit collect --date 2026-05-11 --output release-inputs.js
 python -m unittest discover -s tests -v
 python scripts/selfcheck.py
 git diff --check
-python -m release_notes_kit generate --date 2026-05-11 --tag v0.2.0 --inputs release-inputs.json
-python -m release_notes_kit checkpoint --date 2026-05-11 --tag-candidate v0.2.0 --checks release-inputs.json
+python -m release_notes_kit generate --date 2026-05-11 --tag v0.3.0 --inputs release-inputs.json
+python -m release_notes_kit compare --previous previous-release-summary.json --current release-summary.json
+python -m release_notes_kit checkpoint --date 2026-05-11 --tag-candidate v0.3.0 --checks release-inputs.json
 ```
 
 After running checks, update the `checks.commands` entries in

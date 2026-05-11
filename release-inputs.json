@@ -2,30 +2,43 @@
   "changelog": {
     "changes": [
       {
-        "description": "initial release notes kit MVP",
+        "description": "Compare command that writes deterministic Markdown and JSON release-summary deltas",
         "type": "Added"
       },
       {
-        "description": "seed release notes kit repo",
-        "type": "Maintenance"
+        "description": "Cross-asset example fixtures for prompt, dataset, model-card, tokenizer, and token-ledger style assets",
+        "type": "Added"
+      },
+      {
+        "description": "Selfcheck now exercises previous-release comparison output",
+        "type": "Changed"
+      },
+      {
+        "description": "README documents local previous/current release-summary comparisons",
+        "type": "Documentation"
+      },
+      {
+        "description": "Comparison unit and CLI tests cover deterministic deltas",
+        "type": "Tests"
       }
     ],
-    "title": "20260511-agent-release-notes-kit v0.2.0",
-    "version": "0.2.0"
+    "title": "20260511-agent-release-notes-kit v0.3.0",
+    "version": "0.3.0"
   },
   "checks": {
     "commands": [
       {
         "command": "python -m unittest discover -s tests -v",
-        "status": "skipped"
+        "detail": "17 tests",
+        "status": "passed"
       },
       {
         "command": "python scripts/selfcheck.py",
-        "status": "skipped"
+        "status": "passed"
       },
       {
         "command": "git diff --check",
-        "status": "skipped"
+        "status": "passed"
       }
     ]
   },
@@ -72,5 +85,5 @@
     ]
   },
   "suggested_bump": "minor",
-  "suggested_next_tag": "v0.2.0"
+  "suggested_next_tag": "v0.3.0"
 }

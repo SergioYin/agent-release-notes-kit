@@ -6,7 +6,7 @@ import argparse
 import sys
 
 from . import __version__
-from .core import checkpoint, collect, generate
+from .core import checkpoint, collect, compare, generate
 from .errors import KitError
 from .selfcheck import run_selfcheck
 
@@ -55,6 +55,13 @@ def build_parser() -> argparse.ArgumentParser:
     checkpoint_parser.add_argument("--tag-candidate", help="optional tag candidate, for example v0.1.0")
     checkpoint_parser.set_defaults(func=_checkpoint)
 
+    compare_parser = subparsers.add_parser("compare", help="compare two local release-summary JSON files")
+    compare_parser.add_argument("--previous", required=True, help="previous release-summary JSON path")
+    compare_parser.add_argument("--current", required=True, help="current release-summary JSON path")
+    compare_parser.add_argument("--output", default="RELEASE_COMPARISON.md", help="Markdown comparison output path")
+    compare_parser.add_argument("--summary", default="release-comparison.json", help="JSON comparison output path")
+    compare_parser.set_defaults(func=_compare)
+
     selfcheck_parser = subparsers.add_parser("selfcheck", help="run the built-in deterministic fixture check")
     selfcheck_parser.set_defaults(func=_selfcheck)
     return parser
@@ -100,6 +107,15 @@ def _checkpoint(args) -> None:
         date=args.date,
         checks_path=args.checks,
         tag_candidate=args.tag_candidate,
+    )
+
+
+def _compare(args) -> None:
+    compare(
+        previous=args.previous,
+        current=args.current,
+        output=args.output,
+        summary=args.summary,
     )
 
 

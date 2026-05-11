@@ -1,0 +1,45 @@
+{
+  "changes": [
+    {
+      "description": "Prompt templates for text asset release notes",
+      "type": "Added"
+    },
+    {
+      "description": "Dataset card checklist for ledger-ready metadata",
+      "type": "Added"
+    }
+  ],
+  "checks": [
+    {
+      "command": "python -m unittest discover -s tests -v",
+      "detail": "fixture",
+      "status": "passed"
+    },
+    {
+      "command": "python scripts/selfcheck.py",
+      "detail": null,
+      "status": "skipped"
+    }
+  ],
+  "commits": [
+    {
+      "author": "Token Lab",
+      "date": "2026-05-10",
+      "hash": "1111111111111111111111111111111111111111",
+      "short_hash": "1111111",
+      "subject": "feat: add prompt and dataset release fixtures"
+    }
+  ],
+  "date": "2026-05-10",
+  "repo": {
+    "branch": "main",
+    "dirty": false,
+    "head": "1111111111111111111111111111111111111111",
+    "latest_tag": "v0.2.0",
+    "root": "/examples/cross-asset",
+    "short_head": "111111111111",
+    "status": []
+  },
+  "tag": "v0.2.0",
+  "version": "0.2.0"
+}

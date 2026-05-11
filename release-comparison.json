@@ -1,0 +1,108 @@
+{
+  "changes": {
+    "added": [
+      {
+        "description": "Compare command that writes deterministic Markdown and JSON release-summary deltas",
+        "type": "Added"
+      },
+      {
+        "description": "Cross-asset example fixtures for prompt, dataset, model-card, tokenizer, and token-ledger style assets",
+        "type": "Added"
+      },
+      {
+        "description": "Selfcheck now exercises previous-release comparison output",
+        "type": "Changed"
+      },
+      {
+        "description": "README documents local previous/current release-summary comparisons",
+        "type": "Documentation"
+      },
+      {
+        "description": "Comparison unit and CLI tests cover deterministic deltas",
+        "type": "Tests"
+      }
+    ],
+    "current_by_type": {
+      "Added": 2,
+      "Changed": 1,
+      "Documentation": 1,
+      "Tests": 1
+    },
+    "current_total": 5,
+    "delta": 0,
+    "previous_by_type": {
+      "Added": 3,
+      "Changed": 2
+    },
+    "previous_total": 5,
+    "removed": [
+      {
+        "description": "Collect command that writes deterministic reusable JSON inputs from local git state",
+        "type": "Added"
+      },
+      {
+        "description": "Generate support for collected JSON via top-level changelog and checks sections",
+        "type": "Added"
+      },
+      {
+        "description": "Suggested semantic next tag, conventional commit changelog skeleton, and skipped verification skeletons",
+        "type": "Added"
+      },
+      {
+        "description": "README documents the collect, check, generate, and checkpoint workflow",
+        "type": "Changed"
+      },
+      {
+        "description": "Selfcheck now exercises the collect-to-generate path",
+        "type": "Changed"
+      }
+    ]
+  },
+  "checks": {
+    "added": [],
+    "current_by_status": {
+      "passed": 3
+    },
+    "current_total": 3,
+    "previous_by_status": {
+      "passed": 3
+    },
+    "previous_total": 3,
+    "removed": [],
+    "status_changed": []
+  },
+  "commits": {
+    "current_total": 3,
+    "dropped": [],
+    "new": [
+      {
+        "author": "SergioYin",
+        "date": "2026-05-11",
+        "hash": "10fd723f53d0b798eab566e6db38954e585790dc",
+        "short_hash": "10fd723",
+        "subject": "feat: collect release input metadata"
+      }
+    ],
+    "previous_total": 2
+  },
+  "current": {
+    "branch": "main",
+    "date": "2026-05-11",
+    "dirty": true,
+    "head": "10fd723f53d0b798eab566e6db38954e585790dc",
+    "path": "release-summary.json",
+    "short_head": "10fd723f53d0",
+    "tag": "v0.3.0",
+    "version": "0.3.0"
+  },
+  "previous": {
+    "branch": "main",
+    "date": "2026-05-11",
+    "dirty": true,
+    "head": "b970fba8c0f78e606ea298600c3d1ad6495a4da6",
+    "path": "release-summary-v0.2.0.json",
+    "short_head": "b970fba8c0f7",
+    "tag": "v0.2.0",
+    "version": "0.2.0"
+  }
+}

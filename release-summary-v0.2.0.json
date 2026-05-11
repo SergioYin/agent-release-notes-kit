@@ -1,24 +1,24 @@
 {
   "changes": [
     {
-      "description": "Compare command that writes deterministic Markdown and JSON release-summary deltas",
+      "description": "Collect command that writes deterministic reusable JSON inputs from local git state",
       "type": "Added"
     },
     {
-      "description": "Cross-asset example fixtures for prompt, dataset, model-card, tokenizer, and token-ledger style assets",
+      "description": "Generate support for collected JSON via top-level changelog and checks sections",
       "type": "Added"
     },
     {
-      "description": "Selfcheck now exercises previous-release comparison output",
+      "description": "Suggested semantic next tag, conventional commit changelog skeleton, and skipped verification skeletons",
+      "type": "Added"
+    },
+    {
+      "description": "README documents the collect, check, generate, and checkpoint workflow",
       "type": "Changed"
     },
     {
-      "description": "README documents local previous/current release-summary comparisons",
-      "type": "Documentation"
-    },
-    {
-      "description": "Comparison unit and CLI tests cover deterministic deltas",
-      "type": "Tests"
+      "description": "Selfcheck now exercises the collect-to-generate path",
+      "type": "Changed"
     }
   ],
   "checks": [
@@ -29,7 +29,7 @@
     },
     {
       "command": "python -m unittest discover -s tests -v",
-      "detail": "17 tests",
+      "detail": "13 tests",
       "status": "passed"
     },
     {
@@ -39,13 +39,6 @@
     }
   ],
   "commits": [
-    {
-      "author": "SergioYin",
-      "date": "2026-05-11",
-      "hash": "10fd723f53d0b798eab566e6db38954e585790dc",
-      "short_hash": "10fd723",
-      "subject": "feat: collect release input metadata"
-    },
     {
       "author": "SergioYin",
       "date": "2026-05-11",
@@ -65,33 +58,27 @@
   "repo": {
     "branch": "main",
     "dirty": true,
-    "head": "10fd723f53d0b798eab566e6db38954e585790dc",
-    "latest_tag": "v0.2.0",
+    "head": "b970fba8c0f78e606ea298600c3d1ad6495a4da6",
+    "latest_tag": "v0.1.0",
     "root": "/home/xjyin/workspace/token-lab/20260511-agent-release-notes-kit",
-    "short_head": "10fd723f53d0",
+    "short_head": "b970fba8c0f7",
     "status": [
       " M CHANGELOG.md",
       " M CHECKPOINT.md",
       " M README.md",
       " M RELEASE_NOTES.md",
       " M pyproject.toml",
-      " M release-inputs.json",
       " M release-summary.json",
       " M release_notes_kit/__init__.py",
       " M release_notes_kit/cli.py",
       " M release_notes_kit/core.py",
+      " M release_notes_kit/inputs.py",
       " M release_notes_kit/selfcheck.py",
-      " M tests/test_cli.py",
-      "?? RELEASE_COMPARISON.md",
-      "?? examples/",
-      "?? release-comparison.json",
-      "?? release-summary-v0.2.0.json",
-      "?? release_notes_kit/__pycache__/",
-      "?? release_notes_kit/compare.py",
-      "?? tests/__pycache__/",
-      "?? tests/test_compare.py"
+      "?? release-inputs.json",
+      "?? release_notes_kit/collect.py",
+      "?? tests/test_collect.py"
     ]
   },
-  "tag": "v0.3.0",
-  "version": "0.3.0"
+  "tag": "v0.2.0",
+  "version": "0.2.0"
 }

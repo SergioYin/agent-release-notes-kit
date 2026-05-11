@@ -7,7 +7,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from .core import checkpoint, collect, generate
+from .core import checkpoint, collect, compare, generate
 from .errors import KitError
 
 
@@ -23,6 +23,7 @@ def run_selfcheck() -> None:
 
         changelog = repo / "changelog.json"
         checks = repo / "checks.json"
+        previous_summary = repo / "previous-release-summary.json"
         collected = repo / "release-inputs.json"
         changelog.write_text(
             json.dumps(
@@ -50,10 +51,40 @@ def run_selfcheck() -> None:
             ),
             encoding="utf-8",
         )
+        previous_summary.write_text(
+            json.dumps(
+                {
+                    "date": "2026-05-11",
+                    "version": "0.0.1",
+                    "tag": "v0.0.1",
+                    "repo": {
+                        "root": str(repo),
+                        "branch": "main",
+                        "head": "0000000",
+                        "short_head": "0000000",
+                        "latest_tag": None,
+                        "dirty": False,
+                        "status": [],
+                    },
+                    "changes": [
+                        {"type": "Added", "description": "Text prompt asset fixture"},
+                        {"type": "Added", "description": "Dataset metadata asset fixture"},
+                    ],
+                    "checks": [
+                        {"command": "python -m unittest", "status": "skipped", "detail": "fixture"},
+                    ],
+                    "commits": [],
+                },
+                sort_keys=True,
+            ),
+            encoding="utf-8",
+        )
         (repo / ".git" / "info" / "exclude").write_text(
             (
                 "RELEASE_NOTES.md\n"
                 "release-summary.json\n"
+                "RELEASE_COMPARISON.md\n"
+                "release-comparison.json\n"
                 "CHECKPOINT.md\n"
                 "release-inputs.json\n"
                 "RELEASE_NOTES_COLLECTED.md\n"
@@ -96,6 +127,12 @@ def run_selfcheck() -> None:
             tag_candidate="v0.1.0",
             cwd=str(repo),
         )
+        compare(
+            previous=str(previous_summary),
+            current=str(repo / "release-summary.json"),
+            output=str(repo / "RELEASE_COMPARISON.md"),
+            summary=str(repo / "release-comparison.json"),
+        )
         first = _snapshot(repo)
         generate(
             output=str(repo / "RELEASE_NOTES.md"),
@@ -129,6 +166,12 @@ def run_selfcheck() -> None:
             tag_candidate="v0.1.0",
             cwd=str(repo),
         )
+        compare(
+            previous=str(previous_summary),
+            current=str(repo / "release-summary.json"),
+            output=str(repo / "RELEASE_COMPARISON.md"),
+            summary=str(repo / "release-comparison.json"),
+        )
         second = _snapshot(repo)
         if first != second:
             raise KitError("Selfcheck failed: repeated generation was not deterministic.")
@@ -143,6 +186,8 @@ def _snapshot(repo: Path) -> str:
             (repo / "release-inputs.json").read_text(encoding="utf-8"),
             (repo / "RELEASE_NOTES_COLLECTED.md").read_text(encoding="utf-8"),
             (repo / "release-summary-collected.json").read_text(encoding="utf-8"),
+            (repo / "RELEASE_COMPARISON.md").read_text(encoding="utf-8"),
+            (repo / "release-comparison.json").read_text(encoding="utf-8"),
         ]
     )
 
