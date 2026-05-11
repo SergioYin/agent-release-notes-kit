@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Optional
 
+from .collect import collect as collect
 from .git import read_git_info
 from .inputs import load_changelog, load_checks
 from .render import render_checkpoint_markdown, render_release_markdown, render_summary_json
@@ -16,11 +17,15 @@ def generate(
     date: str,
     changelog_path: Optional[str] = None,
     checks_path: Optional[str] = None,
+    inputs_path: Optional[str] = None,
     tag: Optional[str] = None,
     cwd: Optional[str] = None,
     max_commits: int = 50,
 ) -> None:
     git_info = read_git_info(cwd=cwd, max_commits=max_commits)
+    if inputs_path:
+        changelog_path = changelog_path or inputs_path
+        checks_path = checks_path or inputs_path
     changelog = load_changelog(changelog_path)
     checks = load_checks(checks_path)
     Path(output).write_text(

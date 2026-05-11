@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.0 - 2026-05-11
+
+- Added `collect` command for deterministic release input JSON from local git state.
+- Added semantic next-tag suggestions, conventional commit changelog skeletons, and skipped check skeletons.
+- Added `generate --inputs` support for collected JSON containing `changelog` and `checks` sections.
+- Updated selfcheck and tests to exercise the collect-to-generate workflow.
+
 ## 0.1.0 - 2026-05-11
 
 - Added zero-dependency `release_notes_kit` Python package.

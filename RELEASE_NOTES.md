@@ -1,27 +1,32 @@
-# agent-release-notes-kit v0.1.0
+# agent-release-notes-kit v0.2.0
 
-- Version: `0.1.0`
+- Version: `0.2.0`
 - Date: `2026-05-11`
 - Repository: `/home/xjyin/workspace/token-lab/20260511-agent-release-notes-kit`
 - Branch: `main`
-- Head: `31c7d7e23bb0`
+- Head: `b970fba8c0f7`
 - Dirty: `yes`
 
 ## Changes
 
 ### Added
 
-- Deterministic Markdown release notes and JSON summary generation from local git metadata
-- Strict changelog/checks JSON validation, unit tests, selfcheck wrapper, README, changelog, license, and pyproject
-- Zero-dependency Python CLI with generate, checkpoint, and selfcheck commands
+- Collect command that writes deterministic reusable JSON inputs from local git state
+- Generate support for collected JSON via top-level changelog and checks sections
+- Suggested semantic next tag, conventional commit changelog skeleton, and skipped verification skeletons
+
+### Changed
+
+- README documents the collect, check, generate, and checkpoint workflow
+- Selfcheck now exercises the collect-to-generate path
 
 ## Verification
 
 - `passed` `git diff --check`
-- `passed` `python -m unittest discover -s tests -v` - 9 tests
+- `passed` `python -m unittest discover -s tests -v` - 13 tests
 - `passed` `python scripts/selfcheck.py`
-- `passed` `secret-pattern diff scan` - no secret-like patterns
 
 ## Recent Commits
 
+- `b970fba` 2026-05-11 feat: initial release notes kit MVP (SergioYin)
 - `31c7d7e` 2026-05-11 chore: seed release notes kit repo (SergioYin)

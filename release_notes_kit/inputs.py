@@ -34,6 +34,8 @@ def load_changelog(path: Optional[str]) -> Changelog:
     if not path:
         return Changelog(version=None, title=None, changes=[])
     data = _load_json(path)
+    if isinstance(data, dict) and "changelog" in data:
+        data = data["changelog"]
     if not isinstance(data, dict):
         raise InputError("Changelog JSON must be an object.")
     version = _optional_string(data, "version")
@@ -49,6 +51,8 @@ def load_checks(path: Optional[str]) -> List[CheckResult]:
     if not path:
         return []
     data = _load_json(path)
+    if isinstance(data, dict) and "checks" in data:
+        data = data["checks"]
     if isinstance(data, dict) and "commands" in data:
         raw_items = data["commands"]
     elif isinstance(data, list):

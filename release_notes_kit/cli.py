@@ -6,7 +6,7 @@ import argparse
 import sys
 
 from . import __version__
-from .core import checkpoint, generate
+from .core import checkpoint, collect, generate
 from .errors import KitError
 from .selfcheck import run_selfcheck
 
@@ -25,9 +25,28 @@ def build_parser() -> argparse.ArgumentParser:
     generate_parser.add_argument("--summary", default="release-summary.json", help="JSON summary output path")
     generate_parser.add_argument("--changelog", help="optional changelog JSON path")
     generate_parser.add_argument("--checks", help="optional verification checks JSON path")
+    generate_parser.add_argument("--inputs", help="optional collected JSON path containing changelog and checks sections")
     generate_parser.add_argument("--tag", help="optional release tag, for example v0.1.0")
     generate_parser.add_argument("--max-commits", type=int, default=50, help="maximum recent commits to include")
     generate_parser.set_defaults(func=_generate)
+
+    collect_parser = subparsers.add_parser("collect", help="write reusable JSON inputs from local git state")
+    collect_parser.add_argument("--date", required=True, help="stable release date to embed, for example 2026-05-11")
+    collect_parser.add_argument("--output", default="release-inputs.json", help="JSON output path")
+    collect_parser.add_argument("--max-commits", type=int, default=50, help="maximum recent commits to include")
+    collect_parser.add_argument(
+        "--suggest-bump",
+        choices=("patch", "minor", "major"),
+        default="minor",
+        help="semantic bump to suggest from the latest vX.Y.Z tag",
+    )
+    collect_parser.add_argument(
+        "--checks-command",
+        action="append",
+        default=[],
+        help="extra verification command to add to the skipped check skeleton",
+    )
+    collect_parser.set_defaults(func=_collect)
 
     checkpoint_parser = subparsers.add_parser("checkpoint", help="write a deterministic Markdown checkpoint")
     checkpoint_parser.add_argument("--date", required=True, help="stable checkpoint date to embed")
@@ -59,8 +78,19 @@ def _generate(args) -> None:
         date=args.date,
         changelog_path=args.changelog,
         checks_path=args.checks,
+        inputs_path=args.inputs,
         tag=args.tag,
         max_commits=args.max_commits,
+    )
+
+
+def _collect(args) -> None:
+    collect(
+        output=args.output,
+        date=args.date,
+        max_commits=args.max_commits,
+        suggest_bump=args.suggest_bump,
+        checks_commands=args.checks_command,
     )
 
 

@@ -7,7 +7,7 @@ import subprocess
 import tempfile
 from pathlib import Path
 
-from .core import checkpoint, generate
+from .core import checkpoint, collect, generate
 from .errors import KitError
 
 
@@ -23,6 +23,7 @@ def run_selfcheck() -> None:
 
         changelog = repo / "changelog.json"
         checks = repo / "checks.json"
+        collected = repo / "release-inputs.json"
         changelog.write_text(
             json.dumps(
                 {
@@ -50,7 +51,14 @@ def run_selfcheck() -> None:
             encoding="utf-8",
         )
         (repo / ".git" / "info" / "exclude").write_text(
-            "RELEASE_NOTES.md\nrelease-summary.json\nCHECKPOINT.md\n",
+            (
+                "RELEASE_NOTES.md\n"
+                "release-summary.json\n"
+                "CHECKPOINT.md\n"
+                "release-inputs.json\n"
+                "RELEASE_NOTES_COLLECTED.md\n"
+                "release-summary-collected.json\n"
+            ),
             encoding="utf-8",
         )
         _run(["git", "add", "changelog.json", "checks.json"], repo)
@@ -63,6 +71,21 @@ def run_selfcheck() -> None:
             changelog_path=str(changelog),
             checks_path=str(checks),
             tag="v0.1.0",
+            cwd=str(repo),
+            max_commits=10,
+        )
+        collect(
+            output=str(collected),
+            date="2026-05-11",
+            cwd=str(repo),
+            max_commits=10,
+        )
+        generate(
+            output=str(repo / "RELEASE_NOTES_COLLECTED.md"),
+            summary=str(repo / "release-summary-collected.json"),
+            date="2026-05-11",
+            inputs_path=str(collected),
+            tag="v0.2.0",
             cwd=str(repo),
             max_commits=10,
         )
@@ -84,6 +107,21 @@ def run_selfcheck() -> None:
             cwd=str(repo),
             max_commits=10,
         )
+        collect(
+            output=str(collected),
+            date="2026-05-11",
+            cwd=str(repo),
+            max_commits=10,
+        )
+        generate(
+            output=str(repo / "RELEASE_NOTES_COLLECTED.md"),
+            summary=str(repo / "release-summary-collected.json"),
+            date="2026-05-11",
+            inputs_path=str(collected),
+            tag="v0.2.0",
+            cwd=str(repo),
+            max_commits=10,
+        )
         checkpoint(
             output=str(repo / "CHECKPOINT.md"),
             date="2026-05-11",
@@ -102,6 +140,9 @@ def _snapshot(repo: Path) -> str:
             (repo / "RELEASE_NOTES.md").read_text(encoding="utf-8"),
             (repo / "release-summary.json").read_text(encoding="utf-8"),
             (repo / "CHECKPOINT.md").read_text(encoding="utf-8"),
+            (repo / "release-inputs.json").read_text(encoding="utf-8"),
+            (repo / "RELEASE_NOTES_COLLECTED.md").read_text(encoding="utf-8"),
+            (repo / "release-summary-collected.json").read_text(encoding="utf-8"),
         ]
     )
 

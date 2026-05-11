@@ -1,43 +1,34 @@
 {
-  "changes": [
-    {
-      "description": "Collect command that writes deterministic reusable JSON inputs from local git state",
-      "type": "Added"
-    },
-    {
-      "description": "Generate support for collected JSON via top-level changelog and checks sections",
-      "type": "Added"
-    },
-    {
-      "description": "Suggested semantic next tag, conventional commit changelog skeleton, and skipped verification skeletons",
-      "type": "Added"
-    },
-    {
-      "description": "README documents the collect, check, generate, and checkpoint workflow",
-      "type": "Changed"
-    },
-    {
-      "description": "Selfcheck now exercises the collect-to-generate path",
-      "type": "Changed"
-    }
-  ],
-  "checks": [
-    {
-      "command": "git diff --check",
-      "detail": null,
-      "status": "passed"
-    },
-    {
-      "command": "python -m unittest discover -s tests -v",
-      "detail": "13 tests",
-      "status": "passed"
-    },
-    {
-      "command": "python scripts/selfcheck.py",
-      "detail": null,
-      "status": "passed"
-    }
-  ],
+  "changelog": {
+    "changes": [
+      {
+        "description": "initial release notes kit MVP",
+        "type": "Added"
+      },
+      {
+        "description": "seed release notes kit repo",
+        "type": "Maintenance"
+      }
+    ],
+    "title": "20260511-agent-release-notes-kit v0.2.0",
+    "version": "0.2.0"
+  },
+  "checks": {
+    "commands": [
+      {
+        "command": "python -m unittest discover -s tests -v",
+        "status": "skipped"
+      },
+      {
+        "command": "python scripts/selfcheck.py",
+        "status": "skipped"
+      },
+      {
+        "command": "git diff --check",
+        "status": "skipped"
+      }
+    ]
+  },
   "commits": [
     {
       "author": "SergioYin",
@@ -55,6 +46,7 @@
     }
   ],
   "date": "2026-05-11",
+  "latest_semver_tag": "v0.1.0",
   "repo": {
     "branch": "main",
     "dirty": true,
@@ -79,6 +71,6 @@
       "?? tests/test_collect.py"
     ]
   },
-  "tag": "v0.2.0",
-  "version": "0.2.0"
+  "suggested_bump": "minor",
+  "suggested_next_tag": "v0.2.0"
 }
